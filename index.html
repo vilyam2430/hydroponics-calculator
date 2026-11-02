@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профессиональный калькулятор гидропоники (EC)</title>
+    <style>
+        :root {
+            --primary-color: #27ae60;
+            --primary-hover: #219653;
+            --danger-color: #c0392b;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #cbd5e1;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 15px;
+        }
+        .container {
+            max-width: 1450px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1e293b;
+            margin: 0 0 20px 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+        }
+        h2 {
+            font-size: 1.1rem;
+            color: #1e3a8a;
+            margin: 0 0 12px 0;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Таблица компактная */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11.5px;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 4px 2px;
+            text-align: center;
+        }
+        th {
+            background-color: #1e293b;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 10.5px;
+        }
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        /* Поля ввода для таблицы */
+        input[type="number"], input[type="text"], select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 3px 2px;
+            text-align: center;
+            border: 1px solid #94a3b8;
+            border-radius: 3px;
+            font-size: 11.5px;
+            background-color: #fff;
+            color: #1e293b;
+            font-weight: 500;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.15);
+        }
+        .input-name {
+            text-align: left !important;
+            font-weight: 600;
+            padding-left: 4px !important;
+        }
+        .input-wide {
+            width: 80px !important;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        label {
+            font-weight: 600;
+            font-size: 13px;
+            width: 125px;
+            text-align: right;
+            flex-shrink: 0;
+            color: #475569;
+        }
+        
+        /* Блок результатов */
+        .results-box {
+            background: #f0fdf4;
+            border-left: 5px solid var(--primary-color);
+            padding: 16px 20px;
+            border-radius: 8px;
+            margin-top: 14px;
+            border-top: 1px solid #dcfce7;
+            border-right: 1px solid #dcfce7;
+            border-bottom: 1px solid #dcfce7;
+            position: relative;
+        }
+        .results-box p {
+            margin: 6px 0;
+            font-size: 14.5px;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .btn-action {
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 7px 16px;
+            transition: background 0.2s;
+        }
+        .btn-action:hover {
+            background-color: #0369a1;
+        }
+        .btn-success {
+            background-color: #16a34a;
+        }
+        .btn-success:hover {
+            background-color: #15803d;
+        }
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 2px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .btn-danger:hover {
+            background-color: #991b1b;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        @media (max-width: 900px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn-copy {
+            position: absolute;
+            top: 12px;
+            right: 15px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+            color: #0f172a;
+        }
+
+        .card-comfort {
+            padding: 22px 24px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+        .card-comfort h2 {
+            font-size: 1.15rem;
+            margin-bottom: 16px;
+            color: #0f172a;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        .card-comfort label {
+            font-size: 13px;
+            width: 140px;
+            color: #334155;
+        }
+        
+        .card-comfort input[type="number"] {
+            padding: 8px;
+            font-size: 14.5px;
+            font-weight: 600;
+            width: 75px !important;
+            border: 1px solid #d4d4d8;
+            background-color: #fefce8;
+            color: #713f12;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+        .card-comfort input[type="number"]:hover {
+            border-color: #a1a1aa;
+            background-color: #fef9c3;
+        }
+        .card-comfort input[type="number"]:focus {
+            background-color: #ffffff;
+            border-color: #ca8a04;
+            box-shadow: 0 0 0 3px rgba(202, 138, 4, 0.15);
+            outline: none;
+        }
+
+        .card-comfort .form-row {
+            gap: 20px;
+            margin-bottom: 12px;
+        }
+        .card-comfort .results-box {
+            padding: 16px 20px;
+            margin-top: auto;
+            background: #f8fafc;
+            border-left: 5px solid #0284c7;
+            border-color: #e2e8f0;
+            border-left-color: #0284c7;
+        }
+        .card-comfort .results-box p {
+            font-size: 14.5px;
+            margin-bottom: 10px;
+            color: #334155;
+        }
+        .comfort-list {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: #1e293b;
+        }
+        .comfort-list li {
+            margin-bottom: 6px;
+        }
+        
+        .info-center-row {
+            text-align: center;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            padding: 0 32px;
+            margin-bottom: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            height: 42px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.03);
+            transition: background-color 0.3s;
+        }
+
+        .badge-header {
+            font-size: 0.75rem;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-left: auto;
+            letter-spacing: 0.3px;
+        }
+
+        .unit-label {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #64748b;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .guide-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-top: 12px;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .target-profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+        }
+        .target-profile-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .target-profile-item label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #475569;
+            text-align: left;
+            width: auto;
+        }
+        .target-profile-item input {
+            padding: 5px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            background-color: #fefce8;
+            border: 1px solid #d4d4d8;
+            color: #713f12;
+            border-radius: 4px;
+        }
+
+        .recipe-table-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 820px;
+            margin: 0 auto;
+        }
+        .recipe-table-header {
+            display: grid;
+            grid-template-columns: 310px 1fr 1fr;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 13px;
+            color: #1e3a8a;
+            border-bottom: 2px solid #cbd5e1;
+            padding-bottom: 6px;
+            text-align: center;
+        }
+        .recipe-table-header div:first-child {
+            text-align: left;
+        }
+        .recipe-item-row {
+            display: grid;
+            grid-template-columns: 310px 1fr 1fr;
+            gap: 12px;
+            align-items: center;
+            text-align: center;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        .recipe-name-col {
+            font-weight: 700;
+            color: #1e293b;
+            text-align: left;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Профессиональный калькулятор гидропоники</h1>
+
+    <!-- БЛОК 1: Основной раствор -->
+    <div class="card">
+        <h2>1. Профиль удобрений и состав элементов</h2>
+        
+        <!-- Панель База профилей -->
+        <div class="form-row" style="background: #f1f5f9; padding: 10px; border-radius: 6px; margin-bottom: 14px;">
+            <div class="form-group" style="gap: 12px;">
+                <label style="width: auto; text-align: left; color: #1e3a8a; font-weight: 700;">🌱 База профилей:</label>
+                <select id="presetProfile" style="width: 270px; padding: 5px; font-weight: 600;">
+                    <option value="custom">-- Пользовательский (ручной ввод) --</option>
+                    <option value="cucumber" selected>Огурцы</option>
+                    <option value="tomato">Томаты</option>
+                    <option value="lemon">Лимон / Цитрусовые</option>
+                    <option value="banana">Банан</option>
+                    <option value="watermelon">Арбуз / Дыня</option>
+                    <option value="strawberry">Клубника</option>
+                    <option value="salad">Салат / Зелень</option>
+                </select>
+            </div>
+            <button class="btn-action btn-success" onclick="applyPresetProfile()">Применить профиль</button>
+        </div>
+
+        <!-- БЛОК ВВОДА ЦЕЛЕВОГО ПРОФИЛЯ (мг/л) -->
+        <div style="margin-bottom: 12px;">
+            <div style="font-size: 12.5px; font-weight: 700; color: #1e3a8a; margin-bottom: 6px;">🎯 Целевой профиль питания (мг/л на 1 литр):</div>
+            <div class="target-profile-grid">
+                <div class="target-profile-item">
+                    <label>N (Азот общ., мг/л):</label>
+                    <input type="number" id="targetN" value="130" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>NO₃ (Нитраты, мг/л):</label>
+                    <input type="number" id="targetNo3" value="115" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>NH₄ (Аммоний, мг/л):</label>
+                    <input type="number" id="targetNh4" value="15" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>P (Фосфор, мг/л):</label>
+                    <input type="number" id="targetP" value="40" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>K (Калий, мг/л):</label>
+                    <input type="number" id="targetK" value="200" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Ca (Кальций, мг/л):</label>
+                    <input type="number" id="targetCa" value="150" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Mg (Магний, мг/л):</label>
+                    <input type="number" id="targetMg" value="45" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>S (Сера, мг/л):</label>
+                    <input type="number" id="targetS" value="60" min="0" step="0.1" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Fe (Железо, мг/л):</label>
+                    <input type="number" id="targetFe" value="2.0" min="0" step="0.01" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Mn (Марганец, мг/л):</label>
+                    <input type="number" id="targetMn" value="0.5" min="0" step="0.01" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>B (Бор, мг/л):</label>
+                    <input type="number" id="targetB" value="0.5" min="0" step="0.01" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Zn (Цинк, мг/л):</label>
+                    <input type="number" id="targetZn" value="0.4" min="0" step="0.01" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Cu (Медь, мг/л):</label>
+                    <input type="number" id="targetCu" value="0.05" min="0" step="0.005" oninput="calculateAll()">
+                </div>
+                <div class="target-profile-item">
+                    <label>Mo (Молибден, мг/л):</label>
+                    <input type="number" id="targetMo" value="0.02" min="0" step="0.005" oninput="calculateAll()">
+                </div>
+            </div>
+        </div>
+
+        <!-- ПАНЕЛЬ ОБЪЕМА БАКА И ФОНОВОГО EC С КНОПКОЙ ПРИМЕНИТЬ -->
+        <div class="form-row" style="background: #f8fafc; padding: 10px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 14px;">
+            <div class="form-group">
+                <label style="width: auto; text-align: left;">Объем бака (л):</label>
+                <input type="number" id="tankVolume" class="input-wide" value="17" min="0.1" step="0.5">
+            </div>
+            <div class="form-group" style="margin-left: 10px;">
+                <label style="width: auto; text-align: left;">Фоновый EC:</label>
+                <input type="number" id="bgEc" class="input-wide" value="0.46" min="0" step="0.01">
+            </div>
+            <button class="btn-action btn-success" style="margin-left: 10px;" onclick="applyTankAndBg()">Применить</button>
+            
+            <div style="margin-left: auto;">
+                <button class="btn-action" onclick="exportReport()">📥 Скачать отчет (.txt)</button>
+            </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table id="fertilizersTable">
+                <thead>
+                    <tr>
+                        <th style="width: 230px;">Удобрение</th>
+                        <th>N</th>
+                        <th>NO₃</th>
+                        <th>NH₄</th>
+                        <th>P</th>
+                        <th>K</th>
+                        <th>Ca</th>
+                        <th>Mg</th>
+                        <th>S</th>
+                        <th>Fe</th>
+                        <th>Mn</th>
+                        <th>B</th>
+                        <th>Zn</th>
+                        <th>Cu</th>
+                        <th>Mo</th>
+                    </tr>
+                </thead>
+                <tbody id="fertilizersBody">
+                    <!-- Заполняется скриптом -->
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn-action" style="margin-top: 10px;" onclick="addFertilizerRow()">+ Добавить удобрение</button>
+
+        <!-- ПЛАШКА С НАВЕСКАМИ -->
+        <div class="results-box" style="background: #f8fafc; border-left-color: #1e3a8a; margin-top: 15px;">
+            <button class="btn-copy" onclick="copyResults('mainTankSaltsList', 'Навеска в г на весь бак и на 1л')">Копировать</button>
+            <p style="font-weight: 700; color: #1e3a8a; margin-bottom: 12px; font-size: 15px; text-align: center;">⚖️ Навеска в г на весь бак (<span id="displayTankVolText">17</span> л) и на 1 л:</p>
+            
+            <div class="recipe-table-wrapper">
+                <div class="recipe-table-header">
+                    <div>Удобрение</div>
+                    <div>На бак</div>
+                    <div>На 1 л</div>
+                </div>
+                <div id="mainTankSaltsList" style="display: flex; flex-direction: column; gap: 6px;">
+                    <!-- Заполняется скриптом -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Справочник EC/pH -->
+        <div class="guide-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                <b>📚 Справочник нормативных параметров (EC / pH):</b>
+                <select id="cropSelect" style="width: 220px; padding: 3px; font-size: 12px;" onchange="updateGuideInfo()">
+                    <option value="cucumber">Огурцы</option>
+                    <option value="tomato">Томаты (Помидоры)</option>
+                    <option value="lemon">Лимон</option>
+                    <option value="orange">Апельсин</option>
+                    <option value="mandarin">Мандарин</option>
+                    <option value="banana">Банан</option>
+                    <option value="watermelon">Арбуз</option>
+                    <option value="melon">Дыня</option>
+                    <option value="dill">Укроп</option>
+                    <option value="salad">Салат (Листовая зелень)</option>
+                    <option value="strawberry">Клубника</option>
+                    <option value="pepper">Перец</option>
+                    <option value="eggplant">Баклажаны</option>
+                </select>
+            </div>
+            <p id="guideText" style="margin: 0; color: #475569;"><b>Огурцы:</b> Рассада EC 1.2–1.5 (pH 5.5–5.8) | Вегетация EC 1.6–2.0 (pH 5.6–6.0) | Плодоношение EC 2.1–2.5 (pH 5.8–6.2)</p>
+        </div>
+
+        <!-- ИТОГИ РАСТВОРА -->
+        <div class="results-box" id="mainResults">
+            <p><b>Прирост EC:</b> <span id="resEcGain" style="font-size: 1.1rem; color: #15803d; font-weight: 700;">1.34</span> | <b>Итоговый EC:</b> <span id="resTotalEc" style="font-size: 1.15rem; color: #1e3a8a; font-weight: 700;">1.80</span> ЕС</p>
+            <p><b>NO₃:</b> <span id="resNo3" style="font-weight: 600;">115.0</span> мг/л | <b>NH₄:</b> <span id="resNh4" style="font-weight: 600;">15.0</span> мг/л | <b>Общий N:</b> <span id="resTotalN" style="font-weight: 600;">130.0</span> мг/л (NH₄:NO₃ = <span id="resRatio" style="font-weight: 600;">1:8</span>) | <b>Сера (S):</b> <span id="resSulfur" style="font-weight: 600;">75.3</span> мг/л</p>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <!-- БЛОК 2: Повышение EC -->
+        <div class="card card-comfort">
+            <h2>
+                <span>2. Повышение EC раствора</span>
+                <span class="badge-header">Коррекция EC+</span>
+            </h2>
+            <div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Текущий EC:</label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" id="curEc" value="1.50" min="0" step="0.01" oninput="calculateAll()">
+                            <span class="unit-label">ЕС</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Целевой EC:</label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" id="targetEc" value="1.80" min="0" step="0.01" oninput="calculateAll()">
+                            <span class="unit-label">ЕС</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-center-row" id="boostStatusBanner" style="margin-top: 15px;">
+                Требуемый прирост EC: <span id="boostEcNeeded" style="color: #16a34a; font-size: 1.15rem; margin-left: 6px; font-weight: 700;">0.30</span> ЕС
+            </div>
+
+            <div class="results-box" style="border-left-color: #16a34a; background: #f0fdf4;">
+                <button class="btn-copy" onclick="copyResults('boostSaltsList', 'Блок 2 (Повышение EC)')">Копировать</button>
+                <p style="margin: 0 0 10px 0;"><b>Текущий EC:</b> <span id="boostCurrentEcDisplay" style="font-weight: bold; color: #1e3a8a; font-size: 1.05rem;">1.50</span> ЕС | <b>Целевой EC:</b> <span id="boostTargetEcDisplay" style="font-weight: bold; color: #16a34a; font-size: 1.05rem;">1.80</span> ЕС</p>
+                <ul id="boostSaltsList" class="comfort-list"></ul>
+            </div>
+        </div>
+
+        <!-- БЛОК 3: Долив воды -->
+        <div class="card card-comfort">
+            <h2>
+                <span>3. Долив воды в бак</span>
+                <span class="badge-header">Балансировка H₂O</span>
+            </h2>
+            <div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Текущий EC:</label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" id="waterCurEc" value="1.93" min="0" step="0.01" oninput="calculateAll()">
+                            <span class="unit-label">ЕС</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Целевой EC:</label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" id="waterTargetEc" value="1.80" min="0" step="0.01" oninput="calculateAll()">
+                            <span class="unit-label">ЕС</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Остаток воды:</label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" id="currentWaterVol" value="14.5" min="0" step="0.5" oninput="calculateAll()">
+                            <span class="unit-label">л</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Долив воды:</label>
+                        <div style="display: flex; align-items: center; gap: 6px;">
+                            <input type="number" id="waterAddVol" value="2.5" min="0" step="0.5" oninput="calculateAll()">
+                            <span class="unit-label">л</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-center-row" style="justify-content: space-between;">
+                <div style="font-size: 14px; font-weight: 600; margin-left: 10px;">
+                    Новый объем: <span id="waterNewVolDisplay" style="color: #0284c7; font-size: 1.1rem; font-weight: 700;">17.0</span> л
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; margin-right: 14px;">
+                    <span style="font-size: 13.5px; font-weight: 600; color: #334155;">Фон долива:</span> 
+                    <div style="display: flex; align-items: center; gap: 4px;">
+                        <input type="number" id="waterAddBgEc" value="0.46" min="0" step="0.01" oninput="calculateAll()" style="width: 62px !important; padding: 4px; font-size: 13.5px; height: 26px;"> 
+                        <span class="unit-label" style="font-size: 11px;">ЕС</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-box">
+                <button class="btn-copy" onclick="copyResults('waterSaltsList', 'Блок 3 (Долив воды)')">Копировать</button>
+                <p style="margin: 0 0 10px 0;">
+                    <b>Текущий EC:</b> <span id="waterCurEcDisplay" style="font-weight: bold; color: #1e3a8a; font-size: 1.05rem;">1.93</span> ЕС | 
+                    <b>Целевой EC:</b> <span id="waterTargetEcDisplay" style="font-weight: bold; color: #16a34a; font-size: 1.05rem;">1.80</span> ЕС
+                </p>
+                <ul id="waterSaltsList" class="comfort-list"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const presetProfilesData = {
+    cucumber: {
+        targetEc: 1.8,
+        targetElements: { n: 130, no3: 115, nh4: 15, p: 40, k: 200, ca: 150, mg: 45, s: 60, fe: 2.0, mn: 0.5, b: 0.5, zn: 0.4, cu: 0.05, mo: 0.02 }
+    },
+    tomato: {
+        targetEc: 2.4,
+        targetElements: { n: 150, no3: 138, nh4: 12, p: 45, k: 250, ca: 160, mg: 50, s: 70, fe: 2.2, mn: 0.5, b: 0.5, zn: 0.4, cu: 0.05, mo: 0.02 }
+    },
+    lemon: {
+        targetEc: 1.8,
+        targetElements: { n: 110, no3: 85, nh4: 25, p: 35, k: 180, ca: 120, mg: 45, s: 55, fe: 3.0, mn: 0.6, b: 0.5, zn: 0.4, cu: 0.05, mo: 0.02 }
+    },
+    banana: {
+        targetEc: 2.2,
+        targetElements: { n: 140, no3: 128, nh4: 12, p: 40, k: 280, ca: 130, mg: 45, s: 60, fe: 2.0, mn: 0.5, b: 0.5, zn: 0.4, cu: 0.05, mo: 0.02 }
+    },
+    watermelon: {
+        targetEc: 2.5,
+        targetElements: { n: 150, no3: 138, nh4: 12, p: 50, k: 260, ca: 150, mg: 50, s: 65, fe: 2.2, mn: 0.5, b: 0.5, zn: 0.4, cu: 0.05, mo: 0.02 }
+    },
+    strawberry: {
+        targetEc: 1.8,
+        targetElements: { n: 115, no3: 105, nh4: 10, p: 35, k: 200, ca: 110, mg: 40, s: 50, fe: 2.0, mn: 0.4, b: 0.4, zn: 0.3, cu: 0.04, mo: 0.02 }
+    },
+    salad: {
+        targetEc: 1.4,
+        targetElements: { n: 95, no3: 75, nh4: 20, p: 25, k: 150, ca: 90, mg: 30, s: 40, fe: 1.5, mn: 0.3, b: 0.3, zn: 0.2, cu: 0.03, mo: 0.015 }
+    }
+};
+
+const defaultFerts = [
+    { name: "Кальциевая селитра", n: 15.5, no3: 14.4, nh4: 1.1, p: 0, k: 0, ca: 19, mg: 0, s: 0, fe: 0, mn: 0, b: 0, zn: 0, cu: 0, mo: 0, norm: 0.66 },
+    { name: "Кристалон коричневый", n: 3, no3: 3, nh4: 0, p: 11, k: 38, ca: 0, mg: 2.4, s: 11, fe: 0.07, mn: 0.04, b: 0.025, zn: 0.025, cu: 0.01, mo: 0.004, norm: 0.40 },
+    { name: "Кристалон красный", n: 12, no3: 10.1, nh4: 1.9, p: 12, k: 36, ca: 0, mg: 0.6, s: 1, fe: 0.07, mn: 0.04, b: 0.025, zn: 0.025, cu: 0.01, mo: 0.004, norm: 0.14 },
+    { name: "Сульфат магния", n: 0, no3: 0, nh4: 0, p: 0, k: 0, ca: 0, mg: 9.6, s: 13, fe: 0, mn: 0, b: 0, zn: 0, cu: 0, mo: 0, norm: 0.23 },
+    { name: "Хелат железа", n: 0, no3: 0, nh4: 0, p: 0, k: 0, ca: 0, mg: 0, s: 0, fe: 11, mn: 0, b: 0, zn: 0, cu: 0, mo: 0, norm: 0.02 }
+];
+
+const cropGuides = {
+    cucumber: "<b>Огурцы:</b> Рассада EC 1.2–1.5 (pH 5.5–5.8) | Вегетация EC 1.6–2.0 (pH 5.6–6.0) | Плодоношение EC 2.1–2.5 (pH 5.8–6.2)",
+    tomato: "<b>Томаты:</b> Рассада EC 1.5–1.8 (pH 5.5–5.8) | Вегетация EC 2.0–2.5 (pH 5.8–6.0) | Плодоношение EC 2.5–3.0 (pH 6.0–6.5)",
+    lemon: "<b>Лимон:</b> Саженец/Рост EC 1.4–1.8 (pH 5.5–6.0) | Плодоношение EC 1.8–2.2 (pH 5.8–6.3, важен усиленный Fe и Mg)",
+    orange: "<b>Апельсин:</b> Саженец/Рост EC 1.5–1.8 (pH 5.5–6.0) | Плодоношение EC 2.0–2.4 (pH 5.8–6.3)",
+    mandarin: "<b>Мандарин:</b> Саженец/Рост EC 1.4–1.8 (pH 5.5–6.0) | Плодоношение EC 1.8–2.3 (pH 5.8–6.3)",
+    banana: "<b>Банан:</b> Активный вегетативный рост EC 1.8–2.4 (pH 5.8–6.5, высокая потребность в калии и азоте)",
+    watermelon: "<b>Арбуз:</b> Рассада EC 1.5–1.8 (pH 5.5–5.8) | Вегетация EC 2.0–2.4 (pH 5.8–6.2) | Плодоношение/Налив EC 2.5–3.0 (pH 6.0–6.5)",
+    melon: "<b>Дыня:</b> Рассада EC 1.5–1.8 (pH 5.5–5.8) | Вегетация EC 2.0–2.2 (pH 5.8–6.2) | Плодоношение/Сахаристость EC 2.2–2.7 (pH 6.0–6.5)",
+    dill: "<b>Укроп:</b> Рассада EC 1.0–1.2 (pH 5.5–6.0) | Активный рост и зелень EC 1.4–1.8 (pH 5.8–6.3)",
+    salad: "<b>Салат (Листовая зелень):</b> Рассада EC 0.8–1.0 (pH 5.5–6.0) | Вегетация EC 1.2–1.6 (pH 5.8–6.2)",
+    strawberry: "<b>Клубника:</b> Рассада EC 1.0–1.2 (pH 5.5–5.8) | Укоренение/Вегетация EC 1.4–1.8 (pH 5.8–6.2) | Плодоношение EC 1.8–2.2 (pH 6.0–6.5)",
+    pepper: "<b>Перец:</b> Рассада EC 1.2–1.5 (pH 5.6–5.8) | Вегетация EC 1.8–2.2 (pH 5.8–6.2) | Плодоношение EC 2.2–2.6 (pH 6.0–6.3)",
+    eggplant: "<b>Баклажаны:</b> Рассада EC 1.2–1.5 (pH 5.5–5.8) | Вегетация EC 2.0–2.4 (pH 5.8–6.2) | Плодоношение EC 2.5–2.8 (pH 6.0–6.5)"
+};
+
+function updateGuideInfo() {
+    const val = document.getElementById('cropSelect').value;
+    document.getElementById('guideText').innerHTML = cropGuides[val];
+}
+
+function parseVal(val) {
+    if (typeof val === 'number') return val;
+    if (!val) return 0;
+    let parsed = parseFloat(val.toString().replace(',', '.')) || 0;
+    return parsed < 0 ? 0 : parsed;
+}
+
+function applyTankAndBg() {
+    calculateAll();
+}
+
+function applyPresetProfile() {
+    const profileKey = document.getElementById('presetProfile').value;
+    if (profileKey === 'custom') return;
+
+    const profile = presetProfilesData[profileKey];
+    if (!profile) return;
+
+    document.getElementById('targetEc').value = profile.targetEc;
+    document.getElementById('waterTargetEc').value = profile.targetEc;
+
+    if (profile.targetElements) {
+        document.getElementById('targetN').value = profile.targetElements.n ?? 0;
+        document.getElementById('targetNo3').value = profile.targetElements.no3 ?? 0;
+        document.getElementById('targetNh4').value = profile.targetElements.nh4 ?? 0;
+        document.getElementById('targetP').value = profile.targetElements.p ?? 0;
+        document.getElementById('targetK').value = profile.targetElements.k ?? 0;
+        document.getElementById('targetCa').value = profile.targetElements.ca ?? 0;
+        document.getElementById('targetMg').value = profile.targetElements.mg ?? 0;
+        document.getElementById('targetS').value = profile.targetElements.s ?? 0;
+        document.getElementById('targetFe').value = profile.targetElements.fe ?? 0;
+        document.getElementById('targetMn').value = profile.targetElements.mn ?? 0;
+        document.getElementById('targetB').value = profile.targetElements.b ?? 0;
+        document.getElementById('targetZn').value = profile.targetElements.zn ?? 0;
+        document.getElementById('targetCu').value = profile.targetElements.cu ?? 0;
+        document.getElementById('targetMo').value = profile.targetElements.mo ?? 0;
+    }
+
+    calculateAll();
+}
+
+function initTable() {
+    const versionKey = 'hydro_calc_version_v16';
+    if (!localStorage.getItem(versionKey)) {
+        localStorage.removeItem('hydro_calc_data');
+        localStorage.setItem(versionKey, 'true');
+    }
+
+    const savedData = localStorage.getItem('hydro_calc_data');
+    if (savedData) {
+        try {
+            const parsed = JSON.parse(savedData);
+            document.getElementById('tankVolume').value = parsed.tankVolume ?? 17;
+            document.getElementById('bgEc').value = parsed.bgEc ?? 0.46;
+            document.getElementById('curEc').value = parsed.curEc ?? 1.50;
+            document.getElementById('targetEc').value = parsed.targetEc ?? 1.80;
+            document.getElementById('waterCurEc').value = parsed.waterCurEc ?? 1.93;
+            document.getElementById('waterTargetEc').value = parsed.waterTargetEc ?? 1.80;
+            document.getElementById('currentWaterVol').value = parsed.currentWaterVol ?? 14.5;
+            document.getElementById('waterAddVol').value = parsed.waterAddVol ?? 2.5;
+            document.getElementById('waterAddBgEc').value = parsed.waterAddBgEc ?? 0.46;
+
+            if (parsed.targetElements) {
+                document.getElementById('targetN').value = parsed.targetElements.n ?? 130;
+                document.getElementById('targetNo3').value = parsed.targetElements.no3 ?? 115;
+                document.getElementById('targetNh4').value = parsed.targetElements.nh4 ?? 15;
+                document.getElementById('targetP').value = parsed.targetElements.p ?? 40;
+                document.getElementById('targetK').value = parsed.targetElements.k ?? 200;
+                document.getElementById('targetCa').value = parsed.targetElements.ca ?? 150;
+                document.getElementById('targetMg').value = parsed.targetElements.mg ?? 45;
+                document.getElementById('targetS').value = parsed.targetElements.s ?? 60;
+                document.getElementById('targetFe').value = parsed.targetElements.fe ?? 2.0;
+                document.getElementById('targetMn').value = parsed.targetElements.mn ?? 0.5;
+                document.getElementById('targetB').value = parsed.targetElements.b ?? 0.5;
+                document.getElementById('targetZn').value = parsed.targetElements.zn ?? 0.4;
+                document.getElementById('targetCu').value = parsed.targetElements.cu ?? 0.05;
+                document.getElementById('targetMo').value = parsed.targetElements.mo ?? 0.02;
+            }
+
+            const tbody = document.getElementById('fertilizersBody');
+            tbody.innerHTML = '';
+            const ferts = parsed.fertilizers || defaultFerts;
+            ferts.forEach(f => addFertilizerRow(f));
+            calculateAll();
+            return;
+        } catch(e) {
+            console.error("Ошибка загрузки сохраненных данных", e);
+        }
+    }
+
+    const tbody = document.getElementById('fertilizersBody');
+    tbody.innerHTML = '';
+    defaultFerts.forEach(f => addFertilizerRow(f));
+    calculateAll();
+}
+
+function addFertilizerRow(data = null) {
+    const tbody = document.getElementById('fertilizersBody');
+    const tr = document.createElement('tr');
+    
+    const d = data || { name: "Удобрение", n:0, no3:0, nh4:0, p:0, k:0, ca:0, mg:0, s:0, fe:0, mn:0, b:0, zn:0, cu:0, mo:0, norm:0.5 };
+
+    tr.innerHTML = `
+        <td>
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <button class="btn-danger" title="Удалить строку" onclick="this.closest('tr').remove(); calculateAll();">×</button>
+                <input type="text" class="input-name" value="${d.name}" oninput="saveToStorage()" style="flex: 1;">
+            </div>
+        </td>
+        <td><input type="number" class="val-n" value="${d.n}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-no3" value="${d.no3}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-nh4" value="${d.nh4}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-p" value="${d.p}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-k" value="${d.k}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-ca" value="${d.ca}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-mg" value="${d.mg}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-s" value="${d.s}" min="0" step="0.1" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-fe" value="${d.fe}" min="0" step="0.001" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-mn" value="${d.mn}" min="0" step="0.001" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-b" value="${d.b}" min="0" step="0.001" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-zn" value="${d.zn}" min="0" step="0.001" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-cu" value="${d.cu}" min="0" step="0.001" oninput="calculateAll()"></td>
+        <td><input type="number" class="val-mo" value="${d.mo}" min="0" step="0.0001" oninput="calculateAll()"></td>
+        <input type="hidden" class="norm-input" value="${d.norm !== undefined ? d.norm : 0.5}">
+    `;
+    tbody.appendChild(tr);
+    calculateAll();
+}
+
+function saveToStorage() {
+    const volume = parseVal(document.getElementById('tankVolume').value);
+    const bgEc = parseVal(document.getElementById('bgEc').value);
+    const curEc = parseVal(document.getElementById('curEc').value);
+    const targetEc = parseVal(document.getElementById('targetEc').value);
+    const waterCurEc = parseVal(document.getElementById('waterCurEc').value);
+    const waterTargetEc = parseVal(document.getElementById('waterTargetEc').value);
+    const currentWaterVol = parseVal(document.getElementById('currentWaterVol').value);
+    const waterAddVol = parseVal(document.getElementById('waterAddVol').value);
+    const waterAddBgEc = parseVal(document.getElementById('waterAddBgEc').value);
+
+    const targetElements = {
+        n: parseVal(document.getElementById('targetN').value),
+        no3: parseVal(document.getElementById('targetNo3').value),
+        nh4: parseVal(document.getElementById('targetNh4').value),
+        p: parseVal(document.getElementById('targetP').value),
+        k: parseVal(document.getElementById('targetK').value),
+        ca: parseVal(document.getElementById('targetCa').value),
+        mg: parseVal(document.getElementById('targetMg').value),
+        s: parseVal(document.getElementById('targetS').value),
+        fe: parseVal(document.getElementById('targetFe').value),
+        mn: parseVal(document.getElementById('targetMn').value),
+        b: parseVal(document.getElementById('targetB').value),
+        zn: parseVal(document.getElementById('targetZn').value),
+        cu: parseVal(document.getElementById('targetCu').value),
+        mo: parseVal(document.getElementById('targetMo').value)
+    };
+
+    let fertilizers = [];
+    document.querySelectorAll('#fertilizersBody tr').forEach(row => {
+        fertilizers.push({
+            name: row.querySelector('.input-name').value,
+            n: parseVal(row.querySelector('.val-n').value),
+            no3: parseVal(row.querySelector('.val-no3').value),
+            nh4: parseVal(row.querySelector('.val-nh4').value),
+            p: parseVal(row.querySelector('.val-p').value),
+            k: parseVal(row.querySelector('.val-k').value),
+            ca: parseVal(row.querySelector('.val-ca').value),
+            mg: parseVal(row.querySelector('.val-mg').value),
+            s: parseVal(row.querySelector('.val-s').value),
+            fe: parseVal(row.querySelector('.val-fe').value),
+            mn: parseVal(row.querySelector('.val-mn').value),
+            b: parseVal(row.querySelector('.val-b').value),
+            zn: parseVal(row.querySelector('.val-zn').value),
+            cu: parseVal(row.querySelector('.val-cu').value),
+            mo: parseVal(row.querySelector('.val-mo').value),
+            norm: parseVal(row.querySelector('.norm-input').value)
+        });
+    });
+
+    const data = { tankVolume, bgEc, curEc, targetEc, waterCurEc, waterTargetEc, currentWaterVol, waterAddVol, waterAddBgEc, targetElements, fertilizers };
+    localStorage.setItem('hydro_calc_data', JSON.stringify(data));
+}
+
+function copyResults(listId, title) {
+    const listEl = document.getElementById(listId);
+    let textToCopy = title + "\n";
+    const items = listEl.querySelectorAll('.recipe-item-row, li');
+    items.forEach(item => {
+        textToCopy += "- " + item.textContent.replace(/\s+/g, ' ').trim() + "\n";
+    });
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert("Данные скопированы в буфер обмена!");
+    });
+}
+
+function exportReport() {
+    let report = "=== ПРОФЕССИОНАЛЬНЫЙ ОТЧЕТ КАЛЬКУЛЯТОРА ГИДРОПОНИКИ ===\n\n";
+    report += `Объем бака: ${document.getElementById('tankVolume').value} л\n`;
+    report += `Фоновый EC: ${document.getElementById('bgEc').value} ЕС\n`;
+    report += `Итоговый расчетный EC: ${document.getElementById('resTotalEc').textContent} ЕС\n\n`;
+    
+    report += "Навески удобрений:\n";
+    document.querySelectorAll('#fertilizersBody tr').forEach(row => {
+        const name = row.querySelector('.input-name').value;
+        const norm = parseVal(row.querySelector('.norm-input').value);
+        const volume = parseVal(document.getElementById('tankVolume').value);
+        const total = (norm * volume).toFixed(2);
+        report += `- ${name}: на бак: ${total} г | на 1л: ${norm} г\n`;
+    });
+
+    const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Hydroponics_Report_${new Date().toISOString().slice(0,10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function calculateAll() {
+    saveToStorage();
+
+    const volume = parseVal(document.getElementById('tankVolume').value);
+    const bgEc = parseVal(document.getElementById('bgEc').value);
+
+    document.getElementById('displayTankVolText').textContent = volume;
+
+    const rows = document.querySelectorAll('#fertilizersBody tr');
+    let totalEcGain = 0;
+    let sumSulfur = 0;
+    let sumNo3 = 0;
+    let sumNh4 = 0;
+    let sumN = 0;
+
+    let fertilizerDataList = [];
+    let mainTankHtml = '';
+
+    rows.forEach(row => {
+        const name = row.querySelector('.input-name').value;
+        const norm = parseVal(row.querySelector('.norm-input').value);
+        const totalWeight = norm * volume;
+
+        const nVal = parseVal(row.querySelector('.val-n').value);
+        const pVal = parseVal(row.querySelector('.val-p').value);
+        const kVal = parseVal(row.querySelector('.val-k').value);
+        const sVal = parseVal(row.querySelector('.val-s').value);
+        const no3Val = parseVal(row.querySelector('.val-no3').value);
+        const nh4Val = parseVal(row.querySelector('.val-nh4').value);
+
+        sumSulfur += norm * sVal * 10;
+        sumNo3 += norm * no3Val * 10;
+        sumNh4 += norm * nh4Val * 10;
+        sumN += norm * nVal * 10;
+
+        totalEcGain += norm * 0.938;
+
+        fertilizerDataList.push({ name: name, norm: norm, totalWeight: totalWeight });
+        
+        let displayName = name;
+        if (name.toLowerCase().includes('кристалон')) {
+            displayName = `${name} (${nVal}:${pVal}:${kVal})`;
+        }
+
+        mainTankHtml += `
+            <div class="recipe-item-row">
+                <div class="recipe-name-col">${displayName}:</div>
+                <div><b style="font-size: 1.1rem; color: #1e3a8a;">${totalWeight.toFixed(2)} г</b></div>
+                <div><span style="color: #16a34a; font-weight: 600;">${norm} г</span></div>
+            </div>
+        `;
+    });
+
+    document.getElementById('mainTankSaltsList').innerHTML = mainTankHtml;
+
+    totalEcGain = Math.round(totalEcGain * 100) / 100;
+    const totalEc = Math.round((bgEc + totalEcGain) * 100) / 100;
+
+    document.getElementById('resEcGain').textContent = totalEcGain.toFixed(2);
+    document.getElementById('resTotalEc').textContent = totalEc.toFixed(2);
+    document.getElementById('resSulfur').textContent = sumSulfur.toFixed(1);
+    document.getElementById('resNo3').textContent = sumNo3.toFixed(1);
+    document.getElementById('resNh4').textContent = sumNh4.toFixed(1);
+    document.getElementById('resTotalN').textContent = sumN.toFixed(1);
+
+    if (sumNo3 > 0) {
+        let ratioNo3 = Math.round(sumNo3 / (sumNh4 || 1));
+        document.getElementById('resRatio').textContent = `1:${ratioNo3}`;
+    } else {
+        document.getElementById('resRatio').textContent = `0:0`;
+    }
+
+    const waterAddBgEcInput = document.getElementById('waterAddBgEc');
+    const waterAddBgEc = parseVal(waterAddBgEcInput.value) || bgEc;
+
+    // Раздел 2: Повышение EC
+    const curEc = parseVal(document.getElementById('curEc').value);
+    const targetEc = parseVal(document.getElementById('targetEc').value);
+    document.getElementById('boostCurrentEcDisplay').textContent = curEc.toFixed(2);
+    document.getElementById('boostTargetEcDisplay').textContent = targetEc.toFixed(2);
+    
+    const ecDiff = targetEc - curEc;
+    const banner = document.getElementById('boostStatusBanner');
+    
+    if (ecDiff <= 0) {
+        document.getElementById('boostEcNeeded').textContent = "0.00 (Норма)";
+        banner.style.backgroundColor = "#ecfdf5";
+        banner.style.borderColor = "#10b981";
+    } else {
+        document.getElementById('boostEcNeeded').textContent = ecDiff.toFixed(2);
+        banner.style.backgroundColor = "#f1f5f9";
+        banner.style.borderColor = "#cbd5e1";
+    }
+
+    const boostRatio = (totalEcGain > 0 && ecDiff > 0) ? (ecDiff / totalEcGain) : 0;
+    let boostHtml = '';
+    if (ecDiff <= 0) {
+        boostHtml = `<li><b>Текущий EC уже в норме или выше целевого. Коррекция не требуется.</b></li>`;
+    } else {
+        fertilizerDataList.forEach(item => {
+            let boostWeight = (item.totalWeight * boostRatio).toFixed(2);
+            boostHtml += `<li>${item.name}: <b style="font-size: 1.1rem; color: #15803d;">${boostWeight} г</b></li>`;
+        });
+    }
+    document.getElementById('boostSaltsList').innerHTML = boostHtml;
+
+    // Раздел 3: Долив воды
+    const waterCurEC = parseVal(document.getElementById('waterCurEc').value);
+    const waterTargetEc = parseVal(document.getElementById('waterTargetEc').value);
+    const currentWaterVol = parseVal(document.getElementById('currentWaterVol').value);
+    const waterAddVol = parseVal(document.getElementById('waterAddVol').value);
+    
+    document.getElementById('waterCurEcDisplay').textContent = waterCurEC.toFixed(2);
+    document.getElementById('waterTargetEcDisplay').textContent = waterTargetEc.toFixed(2);
+
+    const newTotalVol = currentWaterVol + waterAddVol;
+    document.getElementById('waterNewVolDisplay').textContent = newTotalVol.toFixed(1);
+
+    const currentSalts = waterCurEC * currentWaterVol;
+    const addedWaterSalts = waterAddBgEc * waterAddVol;
+    const totalSaltsAfterWater = currentSalts + addedWaterSalts;
+
+    const targetSalts = waterTargetEc * newTotalVol;
+    const neededSalts = targetSalts - totalSaltsAfterWater;
+
+    let waterHtml = '';
+    if (neededSalts <= 0) {
+        waterHtml = `<li><b>После долива воды EC в норме или выше целевого (добавка удобрений не нужна).</b></li>`;
+    } else {
+        let totalStandardGainUnits = totalEcGain * volume;
+        let factor = totalStandardGainUnits > 0 ? (neededSalts / totalStandardGainUnits) : 0;
+        
+        fertilizerDataList.forEach(item => {
+            let exactWeight = (item.totalWeight * factor).toFixed(2);
+            waterHtml += `<li>${item.name}: <b style="font-size: 1.1rem; color: #15803d;">${exactWeight} г</b></li>`;
+        });
+    }
+
+    document.getElementById('waterSaltsList').innerHTML = waterHtml;
+}
+
+window.onload = initTable;
+</script>
+
+</body>
+</html>
