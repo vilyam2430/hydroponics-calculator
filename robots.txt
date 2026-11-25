@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://vilyam2430.github.io/hydroponics-calculator/sitemap.xml
