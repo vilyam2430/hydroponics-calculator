@@ -4717,5 +4717,210 @@ window.onload = function () {
 };
 </script>
 
+
+    <section class="card" id="seoGuideFaqCard" data-lang-guide>
+  <div class="panel-head">
+    <div class="panel-head-left">
+      <h2 id="seoGuideTitle"></h2>
+      <p class="panel-desc" id="seoGuideLead"></p>
+    </div>
+  </div>
+  <div id="seoGuideBody" class="ph-howto" style="margin-top: 0;"></div>
+  <div style="margin-top: 20px;">
+    <h3 id="seoFaqHeading"></h3>
+    <div id="seoFaqList"></div>
+  </div>
+</section>
+
+<script type="application/ld+json" id="faqJsonLdScript">{}</script>
+
+<script>
+(function () {
+  const SEO_CONTENT = {
+    uk: {
+      guideTitle: "Як користуватися калькулятором живильних розчинів для гідропоніки",
+      guideLead: "Точний розрахунок добрив для гідропоніки — це основа здорового росту рослин у DWC, крапельному поливі, NFT чи субстратах на кшталт кокосу й мінеральної вати. Онлайн-калькулятор NPK, EC та pH допомагає швидко визначити наважки солей під об'єм бака та цільовий профіль культури.",
+      stepsTitle: "Основні кроки підготовки розчину",
+      steps: [
+        "<b>Врахуйте вихідну воду.</b> Виміряйте початковий EC (або TDS) та pH води з-під крана, фільтра чи осмосу — кальцій і магній жорсткості вже впливають на підсумковий баланс.",
+        "<b>Розрахуйте наважки добрив.</b> Введіть потрібні концентрації елементів або оберіть профіль живлення, щоб отримати точні грами кожного компонента під ваш об'єм бака.",
+        "<b>Дотримуйтеся порядку змішування.</b> Розчиняйте солі в окремих ємностях або додавайте їх у воду послідовно, щоб уникнути випадання нерозчинних осадів (особливо з кальцієвою селітрою, сульфатами та фосфатами).",
+        "<b>Перевірте EC і відкоригуйте pH.</b> Після повного розчинення солей виміряйте електропровідність і доведіть pH до робочого діапазону (зазвичай близько 5,5–6,5 залежно від культури та фази)."
+      ],
+      faqTitle: "Часті запитання (FAQ)",
+      faq: [
+        { q: "Як розрахувати добрива для гідропоніки на свій об'єм бака?", a: "Оберіть потрібний об'єм розчину в літрах, вкажіть цільові параметри живлення або наявні солі, і калькулятор перерахує точні наважки в грамах. Зважуйте компоненти з точністю до 0,01 г і повністю розчиняйте кожну сіль перед додаванням наступної." },
+        { q: "У чому різниця між NPK, EC та pH у живильному розчині?", a: "NPK (разом із кальцієм, магнієм, сіркою та мікроелементами) показує склад і співвідношення поживних речовин. EC (електропровідність) відображає загальну концентрацію розчинених солей, а pH визначає кислотність або лужність середовища, від якої залежить доступність елементів для коренів." },
+        { q: "Чому при змішуванні добрив може з'явитися осад?", a: "Осад найчастіше утворюється, коли кальцій (наприклад, з кальцієвої селітри) у високій концентрації контактує із сульфатами чи фосфатами без достатнього розведення водою. Розводьте компоненти по черзі у значному об'ємі води або використовуйте схему окремих концентратів А та B." },
+        { q: "Чи можна використовувати калькулятор для кокосового субстрату та гроубегів?", a: "Так, розрахунки підходять для більшості безґрунтових систем: кокосового субстрату, мінеральної вати, керамзиту, DWC та крапельного поливу. Для кокосу додатково важливо враховувати його катіонообмінну ємність і початкову буферизацію." },
+        { q: "Як часто потрібно перевіряти EC і pH у системі?", a: "У проточних і рециркуляційних системах (DWC, NFT, крапельний полив) перевіряти pH та EC варто щодня або через день, оскільки рослини споживають воду та мінерали з різною швидкістю, і коригувати показники за потреби." }
+      ]
+    },
+    ru: {
+      guideTitle: "Как пользоваться калькулятором питательных растворов для гидропоники",
+      guideLead: "Точный расчёт удобрений для гидропоники — основа здорового роста растений в DWC, капельном поливе, NFT или на субстратах вроде кокоса и минеральной ваты. Онлайн-калькулятор NPK, EC и pH помогает быстро рассчитать навески солей под объём бака и целевой профиль культуры.",
+      stepsTitle: "Основные шаги приготовления раствора",
+      steps: [
+        "<b>Учтите исходную воду.</b> Измерьте начальный EC (или TDS) и pH воды из-под крана, фильтра или осмоса — кальций и магний жёсткости уже влияют на итоговый состав.",
+        "<b>Рассчитайте навески удобрений.</b> Задайте нужные концентрации элементов или выберите профиль питания, чтобы получить точные граммы каждого компонента на ваш объём ёмкости.",
+        "<b>Соблюдайте порядок смешивания.</b> Растворяйте соли в отдельных ёмкостях или вносите их в воду последовательно, чтобы не выпал нерастворимый осадок (особенно с кальциевой селитрой, сульфатами и фосфатами).",
+        "<b>Проверьте EC и скорректируйте pH.</b> После полного растворения солей измерьте электропроводность и приведите pH к рабочему диапазону (обычно около 5,5–6,5 в зависимости от культуры и фазы)."
+      ],
+      faqTitle: "Частые вопросы (FAQ)",
+      faq: [
+        { q: "Как рассчитать удобрения для гидропоники на свой объём бака?", a: "Выберите нужный объём раствора в литрах, укажите целевые параметры питания или имеющиеся соли, и калькулятор пересчитает точные навески в граммах. Взвешивайте компоненты с точностью до 0,01 г и полностью растворяйте каждую соль перед добавлением следующей." },
+        { q: "В чём разница между NPK, EC и pH в питательном растворе?", a: "NPK (вместе с кальцием, магнием, серой и микроэлементами) показывает состав и соотношение питательных веществ. EC (электропроводность) отражает общую концентрацию растворённых солей, а pH задаёт кислотность или щёлочность среды, от которой зависит доступность элементов для корней." },
+        { q: "Почему при смешивании удобрений может появиться осадок?", a: "Осадок чаще всего образуется, когда кальций (например, из кальциевой селитры) в высокой концентрации контактирует с сульфатами или фосфатами без достаточного разведения водой. Разводите компоненты по очереди в большом объёме воды или используйте схему отдельных концентратов А и B." },
+        { q: "Можно ли использовать калькулятор для кокосового субстрата и гроубэгов?", a: "Да, расчёты подходят для большинства беспочвенных систем: кокосового субстрата, минеральной ваты, керамзита, DWC и капельного полива. Для кокоса дополнительно важно учитывать его катионообменную ёмкость и предварительную буферизацию." },
+        { q: "Как часто нужно проверять EC и pH в системе?", a: "В проточных и рециркуляционных системах (DWC, NFT, капельный полив) проверять pH и EC стоит ежедневно или через день, так как растения потребляют воду и минералы с разной скоростью, и корректировать показатели при необходимости." }
+      ]
+    },
+    en: {
+      guideTitle: "How to Use the Hydroponic Nutrient Solution Calculator",
+      guideLead: "Accurate hydroponic fertilizer calculation is the foundation of healthy plant growth in DWC, drip irrigation, NFT, or substrates like coco coir and rockwool. This online NPK, EC, and pH calculator helps you quickly find exact salt weights for your tank volume and target crop profile.",
+      stepsTitle: "Key steps for mixing a nutrient solution",
+      steps: [
+        "<b>Account for your source water.</b> Measure baseline EC (or TDS) and pH of tap, filtered, or RO water—hardness calcium and magnesium already affect the final balance.",
+        "<b>Calculate fertilizer weights.</b> Enter target element concentrations or pick a feeding profile to get exact gram weights for each component based on your tank volume.",
+        "<b>Follow proper mixing order.</b> Dissolve salts in separate containers or add them sequentially into water to avoid insoluble precipitates (especially with calcium nitrate, sulfates, and phosphates).",
+        "<b>Check EC and adjust pH.</b> Once all salts are fully dissolved, measure solution conductivity and bring pH into the working range (typically around 5.5–6.5 depending on crop and growth stage)."
+      ],
+      faqTitle: "Frequently Asked Questions (FAQ)",
+      faq: [
+        { q: "How do I calculate hydroponic nutrients for my tank volume?", a: "Select your solution volume in liters, set your target nutrient profile or available salts, and the calculator computes exact weights in grams. Weigh ingredients to 0.01 g accuracy and dissolve each salt completely before adding the next." },
+        { q: "What is the difference between NPK, EC, and pH in a nutrient solution?", a: "NPK (along with calcium, magnesium, sulfur, and micronutrients) describes nutrient composition and balance. EC (electrical conductivity) reflects total dissolved salt concentration, while pH indicates acidity or alkalinity, which governs nutrient availability to roots." },
+        { q: "Why can a precipitate form when mixing fertilizers?", a: "Precipitates usually form when concentrated calcium (such as from calcium nitrate) meets sulfates or phosphates without enough water dilution. Dilute components one by one in ample water or use separate A and B stock concentrates." },
+        { q: "Can I use this calculator for coco coir and grow bags?", a: "Yes, the calculations fit most soilless systems including coco coir, rockwool, expanded clay, DWC, and drip irrigation. With coco coir, also account for cation exchange capacity and proper buffering." },
+        { q: "How often should I check EC and pH in my system?", a: "In recirculating and active systems (DWC, NFT, drip), check pH and EC daily or every other day because plants take up water and minerals at different rates, adjusting as needed." }
+      ]
+    },
+    fr: {
+      guideTitle: "Comment utiliser le calculateur de solutions nutritives pour hydroponie",
+      guideLead: "Un calcul précis des engrais en hydroponie est essentiel pour la croissance saine des plantes en DWC, goutte-à-goutte, NFT ou sur substrats comme la fibre de coco et la laine de roche. Ce calculateur NPK, EC et pH en ligne aide à trouver rapidement les dosages exacts selon le volume du réservoir et le profil visé.",
+      stepsTitle: "Étapes clés pour préparer la solution",
+      steps: [
+        "<b>Tenez compte de l'eau de départ.</b> Mesurez l'EC (ou TDS) et le pH initial de l'eau du robinet, filtrée ou osmosée — le calcium et le magnésium déjà présents influencent l'équilibre final.",
+        "<b>Calculez les dosages d'engrais.</b> Renseignez les concentrations cibles ou choisissez un profil nutritionnel pour obtenir les grammes exacts de chaque composant pour votre volume.",
+        "<b>Respectez l'ordre de mélange.</b> Dissolvez les sels séparément ou ajoutez-les l'un après l'autre dans l'eau pour éviter les précipités insolubles (notamment avec le nitrate de calcium, les sulfates et les phosphates).",
+        "<b>Vérifiez l'EC et ajustez le pH.</b> Après dissolution complète, mesurez l'électroconductivité et ajustez le pH dans la plage souhaitée (souvent autour de 5,5–6,5 selon la culture et le stade)."
+      ],
+      faqTitle: "Questions fréquentes (FAQ)",
+      faq: [
+        { q: "Comment calculer les engrais hydroponiques pour mon volume de réservoir ?", a: "Indiquez le volume de solution en litres, vos objectifs nutritionnels ou les engrais disponibles, et le calculateur convertit les besoins en grammes précis. Pesez à 0,01 g près et dissolvez chaque sel complètement avant d'ajouter le suivant." },
+        { q: "Quelle est la différence entre NPK, EC et pH dans une solution nutritive ?", a: "Le NPK (avec calcium, magnésium, soufre et oligo-éléments) indique la composition et l'équilibre des nutriments. L'EC (électroconductivité) reflète la concentration globale en sels dissous, tandis que le pH mesure l'acidité ou l'alcalinité, qui conditionne l'assimilation par les racines." },
+        { q: "Pourquoi un précipité peut-il apparaître lors du mélange des engrais ?", a: "Un précipité se forme surtout lorsque le calcium (par exemple du nitrate de calcium) fortement concentré rencontre des sulfates ou des phosphates sans dilution suffisante. Diluez chaque composant l'un après l'autre dans un grand volume d'eau ou utilisez deux solutions mères distinctes A et B." },
+        { q: "Peut-on utiliser le calculateur pour la fibre de coco et les sacs de culture ?", a: "Oui, les calculs conviennent à la plupart des cultures hors-sol : fibre de coco, laine de roche, billes d'argile, DWC et goutte-à-goutte. Avec la coco, pensez aussi à sa capacité d'échange cationique et à son tamponnage initial." },
+        { q: "À quelle fréquence contrôler l'EC et le pH du système ?", a: "Dans les systèmes recirculants ou actifs (DWC, NFT, goutte-à-goutte), vérifiez pH et EC tous les jours ou tous les deux jours, car l'absorption d'eau et de sels varie selon les plantes, puis corrigez si nécessaire." }
+      ]
+    },
+    de: {
+      guideTitle: "So nutzen Sie den Nährlösungs-Rechner für Hydroponik",
+      guideLead: "Eine genaue Düngerberechnung für Hydroponik bildet die Grundlage für gesundes Pflanzenwachstum bei DWC, Tropfbewässerung, NFT oder Substraten wie Kokos und Steinwolle. Der Online-NPK-, EC- und pH-Rechner hilft dabei, Einwaagen schnell an Tankvolumen und Zielprofil anzupassen.",
+      stepsTitle: "Wichtige Schritte beim Ansetzen der Nährlösung",
+      steps: [
+        "<b>Ausgangswasser einbeziehen.</b> Messen Sie Start-EC (bzw. TDS) und pH von Leitungs-, Filter- oder Umkehrosmosewasser – Härtebildner wie Calcium und Magnesium fließen bereits in die Bilanz ein.",
+        "<b>Düngermengen berechnen.</b> Geben Sie Zielwerte für die Nährstoffe ein oder wählen Sie ein Profil, um exakte Grammwerte pro Komponente für Ihr Tankvolumen zu erhalten.",
+        "<b>Mischreihenfolge einhalten.</b> Lösen Sie Salze getrennt auf oder geben Sie sie nacheinander in Wasser, um unlösliche Ausfällungen zu vermeiden (besonders bei Calciumnitrat, Sulfaten und Phosphaten).",
+        "<b>EC prüfen und pH einstellen.</b> Nach vollständigem Lösen die Leitfähigkeit messen und den pH-Wert auf den Zielbereich bringen (meist etwa 5,5–6,5 je nach Kultur und Entwicklungsphase)."
+      ],
+      faqTitle: "Häufige Fragen (FAQ)",
+      faq: [
+        { q: "Wie berechne ich Hydroponik-Dünger für mein Tankvolumen?", a: "Geben Sie das gewünschte Lösungs-Volumen in Litern an, legen Sie Zielwerte oder vorhandene Salze fest, und der Rechner ermittelt die Einwaagen in Gramm. Wiegen Sie möglichst auf 0,01 g genau ab und lösen Sie jedes Salz vollständig, bevor das nächste folgt." },
+        { q: "Worin unterscheiden sich NPK, EC und pH in der Nährlösung?", a: "NPK (zusammen mit Calcium, Magnesium, Schwefel und Spurenelementen) beschreibt Zusammensetzung und Verhältnis der Nährstoffe. Der EC-Wert (elektrische Leitfähigkeit) zeigt die Gesamtkonzentration gelöster Salze, während der pH-Wert Säuregrad oder Alkalität angibt und die Nährstoffverfügbarkeit beeinflusst." },
+        { q: "Warum kann beim Mischen von Düngern ein Niederschlag entstehen?", a: "Ausfällungen entstehen häufig, wenn hochkonzentriertes Calcium (z. B. aus Calciumnitrat) ohne ausreichende Verdünnung auf Sulfate oder Phosphate trifft. Lösen Sie Komponenten nacheinander in reichlich Wasser oder nutzen Sie getrennte Stammlösungen A und B." },
+        { q: "Lässt sich der Rechner für Kokossubstrat und Growbags verwenden?", a: "Ja, die Berechnungen passen für die meisten erdlosen Systeme wie Kokos, Steinwolle, Blähton, DWC und Tropfsysteme. Bei Kokos sollten Sie zusätzlich Kationenaustauschkapazität und Pufferung beachten." },
+        { q: "Wie oft sollten EC und pH im System kontrolliert werden?", a: "In umlaufenden und aktiven Systemen (DWC, NFT, Tropfbewässerung) empfiehlt sich eine Kontrolle von pH und EC täglich oder jeden zweiten Tag, da Pflanzen Wasser und Nährstoffe unterschiedlich schnell aufnehmen, und bei Bedarf eine Korrektur." }
+      ]
+    },
+    es: {
+      guideTitle: "Cómo usar la calculadora de soluciones nutritivas para hidroponía",
+      guideLead: "Un cálculo preciso de fertilizantes para hidroponía es clave para el crecimiento sano de las plantas en DWC, riego por goteo, NFT o sustratos como fibra de coco y lana de roca. Esta calculadora de NPK, EC y pH en línea permite calcular rápidamente los pesos de sales según el volumen del depósito y el perfil objetivo.",
+      stepsTitle: "Pasos principales para preparar la solución",
+      steps: [
+        "<b>Ten en cuenta el agua inicial.</b> Mide la EC (o TDS) y el pH de partida del agua de grifo, filtrada o de ósmosis; el calcio y el magnesio presentes ya influyen en el resultado final.",
+        "<b>Calcula los pesos de fertilizantes.</b> Introduce las concentraciones deseadas o elige un perfil nutricional para obtener los gramos exactos de cada componente según el volumen del depósito.",
+        "<b>Respeta el orden de mezcla.</b> Disuelve las sales por separado o añádelas de forma secuencial en el agua para evitar precipitados insolubles (sobre todo con nitrato cálcico, sulfatos y fosfatos).",
+        "<b>Revisa la EC y ajusta el pH.</b> Una vez disueltas todas las sales, mide la conductividad y lleva el pH al rango de trabajo (habitualmente cerca de 5,5–6,5 según el cultivo y la etapa)."
+      ],
+      faqTitle: "Preguntas frecuentes (FAQ)",
+      faq: [
+        { q: "¿Cómo calcular los fertilizantes hidropónicos para el volumen de mi depósito?", a: "Selecciona el volumen de solución en litros, define tus objetivos nutricionales o sales disponibles y la calculadora mostrará los gramos exactos. Pesa con precisión de 0,01 g y disuelve cada sal por completo antes de añadir la siguiente." },
+        { q: "¿Cuál es la diferencia entre NPK, EC y pH en una solución nutritiva?", a: "El NPK (junto con calcio, magnesio, azufre y micronutrientes) indica la composición y proporción de nutrientes. La EC (conductividad eléctrica) refleja la concentración total de sales disueltas, mientras que el pH indica la acidez o alcalinidad, que condiciona la disponibilidad de los elementos para las raíces." },
+        { q: "¿Por qué puede aparecer precipitado al mezclar fertilizantes?", a: "Suele formarse cuando el calcio (por ejemplo, del nitrato cálcico) en alta concentración entra en contacto con sulfatos o fosfatos sin suficiente dilución en agua. Para evitarlo, disuelve los componentes uno a uno en buen volumen de agua o emplea concentrados separados A y B." },
+        { q: "¿Se puede usar la calculadora para fibra de coco y bolsas de cultivo?", a: "Sí, los cálculos sirven para la mayoría de sistemas sin suelo: fibra de coco, lana de roca, arcilla expandida, DWC y goteo. En coco, conviene tener en cuenta su capacidad de intercambio catiónico y el tamponado previo." },
+        { q: "¿Con qué frecuencia conviene revisar la EC y el pH en el sistema?", a: "En sistemas recirculantes o activos (DWC, NFT, goteo), conviene medir pH y EC a diario o cada dos días, ya que las plantas consumen agua y sales a distinto ritmo, ajustando según haga falta." }
+      ]
+    }
+  };
+
+  function getActiveLang() {
+    if (typeof currentLang !== "undefined" && SEO_CONTENT[currentLang]) return currentLang;
+    const htmlLang = (document.documentElement.lang || "uk").slice(0, 2).toLowerCase();
+    return SEO_CONTENT[htmlLang] ? htmlLang : "uk";
+  }
+
+  function renderSeoBlock(lang) {
+    const data = SEO_CONTENT[lang] || SEO_CONTENT.uk;
+    document.documentElement.lang = lang;
+
+    const titleEl = document.getElementById("seoGuideTitle");
+    const leadEl = document.getElementById("seoGuideLead");
+    const bodyEl = document.getElementById("seoGuideBody");
+    const faqHeadingEl = document.getElementById("seoFaqHeading");
+    const faqListEl = document.getElementById("seoFaqList");
+    const jsonLdEl = document.getElementById("faqJsonLdScript");
+
+    if (titleEl) titleEl.textContent = data.guideTitle;
+    if (leadEl) leadEl.textContent = data.guideLead;
+
+    if (bodyEl) {
+      bodyEl.innerHTML =
+        `<div class="ph-howto-title">${data.stepsTitle}</div>` +
+        `<ol>${data.steps.map((s) => `<li>${s}</li>`).join("")}</ol>`;
+    }
+
+    if (faqHeadingEl) faqHeadingEl.textContent = data.faqTitle;
+
+    if (faqListEl) {
+      faqListEl.innerHTML = data.faq
+        .map(
+          (item, idx) =>
+            `<details style="border-top: 1px solid var(--line); padding: 12px 0;"${idx === 0 ? " open" : ""}>` +
+            `<summary style="cursor: pointer; font-weight: 700; color: var(--ink);">${item.q}</summary>` +
+            `<p style="margin: 8px 0 0; color: var(--ink-2); line-height: 1.6;">${item.a}</p>` +
+            `</details>`
+        )
+        .join("");
+    }
+
+    if (jsonLdEl) {
+      jsonLdEl.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "inLanguage": lang,
+        "mainEntity": data.faq.map((item) => ({
+          "@type": "Question",
+          "name": item.q,
+          "acceptedAnswer": { "@type": "Answer", "text": item.a }
+        }))
+      }, null, 2);
+    }
+  }
+
+  const origSelectLang = window.selectLang;
+  if (typeof origSelectLang === "function") {
+    window.selectLang = function (lang) {
+      origSelectLang(lang);
+      renderSeoBlock(getActiveLang());
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    renderSeoBlock(getActiveLang());
+  });
+
+  renderSeoBlock(getActiveLang());
+})();
+</script>
 </body>
 </html>
